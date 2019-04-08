@@ -1,3 +1,7 @@
+if (__DEV__) {
+    import('./ReactotronConfig').then(() => console.log('Reactotron Configured.'));
+}
+
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import DrawerNavigator from './components/DrawerNavigator';
@@ -25,7 +29,7 @@ export default class App extends React.Component {
       } = this.state;
       let mainScreen = currentScreen === 'SplashScreen' ? <SplashScreen/> : <DrawerNavigator /> ;
     return (
-      <DrawerNavigator />
+      <FloatingModal />
     );
   }
 }

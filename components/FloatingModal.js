@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { XPTouchEffect } from '../utils/XPTouchEffect';
-import { API_KEY, THEME_GREEN } from '../utils/Constants';
+import { API_KEY, THEME_GREEN, THEME_DARK } from '../utils/Constants';
 
 
 export default class FloatingModal extends React.Component {
@@ -44,7 +44,7 @@ export default class FloatingModal extends React.Component {
           <Text style={{ marginTop: 240 }}>Show Modal</Text>
       </XPTouchEffect>
         <Modal isVisible={this.state.isModalVisible}
-            style={{ margin: 40, backgroundColor: 'green', borderRadius: 12 }}
+            style={{ margin: 40, backgroundColor: 'lightgray', borderRadius: 12 }}
             onBackdropPress={() => this._toggleModal()}
             onSwipeComplete={() => this._toggleModal()}
             swipeDirection="down"
