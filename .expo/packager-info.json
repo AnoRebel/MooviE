@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 8518,
-  "expoServerNgrokUrl": "https://pb-hx8.anorebel.moovie.exp.direct",
-  "packagerNgrokUrl": "https://packager.pb-hx8.anorebel.moovie.exp.direct",
-  "ngrokPid": 9372,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
