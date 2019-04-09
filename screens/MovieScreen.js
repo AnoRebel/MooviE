@@ -26,6 +26,7 @@ export default class MovieScreen extends React.Component {
         super(props);
 
         this.state = {
+            id: null,
             page: 1,
             time: 'day',
             error: null,
@@ -42,10 +43,11 @@ export default class MovieScreen extends React.Component {
         console.log('Mounted:');
         setTimeout(() => { this.setState({ mounted: false }) }, 2000);
     }
-  
-    
-    toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
+
+
+    toggleModal = (id) => {
+        this.setState({ id, isModalVisible: !this.state.isModalVisible });
+        console.log(this.state.id);
     }
 
     fetchMovies = async () => {
@@ -154,15 +156,15 @@ export default class MovieScreen extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#343834' }}>
         <StatusBar barStyle="dark-content" backgroundColor="#006064" />
-        <FloatingModal 
+        <FloatingModal
+            modalToggle={this.toggleModal}
           isVisible={this.state.isModalVisible}
-          modalToggle={this.toggleModal}
         />
             <SwipeListView
                 useFlatList
                 data={items}
                 renderItem={({item}) =>
-                        <XPTouchEffect>
+                        <XPTouchEffect onLongPress={() => this.toggleModal() }>
                             <View style={styles.container}>
                                 <Picache
                                     style={ styles.vfimage }

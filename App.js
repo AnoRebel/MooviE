@@ -29,7 +29,7 @@ export default class App extends React.Component {
       } = this.state;
       let mainScreen = currentScreen === 'SplashScreen' ? <SplashScreen/> : <DrawerNavigator /> ;
     return (
-      <FloatingModal />
+      <DrawerNavigator />
     );
   }
 }

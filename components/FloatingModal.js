@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
+import { PulseIndicator } from 'react-native-indicators';
 import { XPTouchEffect } from '../utils/XPTouchEffect';
 import XPIcon from '../utils/XPIcon';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -31,26 +32,26 @@ export default class FloatingModal extends React.Component {
     }
 
     componentWillMount() {
-        console.log('Mounted');
+        console.log('Mounted Modal');
     }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <XPTouchEffect onPress={this.props.modalToggle}>
-          <Text style={{ marginTop: 240 }}>Show Modal</Text>
-      </XPTouchEffect>
         <Modal isVisible={this.props.isVisible}
-            style={{ margin: 40, backgroundColor: 'lightgray', borderRadius: 12 }}
-            onBackdropPress={() => this.props.modalToggle()}
-            onSwipeComplete={() => this.pros.modalToggle()}
+            style={ styles.modal }
+            onBackdropPress={this.props.modalToggle}
+            onSwipeComplete={this.props.modalToggle}
             swipeDirection="down"
             backdropColor={THEME_GREEN}
+            onModalShow={() => {}}
+            onModalWillShow={() => {}}
             >
-          <View style={{ flex: 1 }}>
-              <View style={{ height: HEIGHT * 0.30, backgroundColor: 'aqua', borderTopLeftRadius: 13, borderTopRightRadius: 13 }}>
+            { this.state.loading && <PulseIndicator color={THEME_GREEN} size={120} /> }
+          { !this.state.loading && <View style={{ flex: 1 }}>
+              <View style={ styles.topText }>
                   <XPTouchEffect>
-                      <View style={{ position: 'absolute', top: '5%', left: '4%', width: WIDTH * 0.70 }}>
+                      <View style={ styles.titleView }>
                           <Text
                               ellipsizeMode='tail'
                               numberOfLines={3}
@@ -58,30 +59,38 @@ export default class FloatingModal extends React.Component {
                               >Some title <Ionicons name='ios-arrow-forward' size={18} /></Text>
                       </View>
                   </XPTouchEffect>
-                  <View style={{ position: 'absolute', right: '3%', top: '5%', width: 33 }}>
+                  <View style={ styles.linkView }>
                       <Feather name='external-link' size={32} color='white'/>
                 </View>
               </View>
-              <View style={{ backgroundColor: 'lightblue' }}>
-                  <View style={{ position: 'absolute', top: '5%', left: '4%', width: WIDTH * 0.50 }}>
-                      <Text style={ styles.title }><Ionicons name='md-calendar' size={16} /> Some text</Text>
+              <ScrollView style={ styles.mainView }>
+                  <View style={ styles.dateView }>
+                      <Text style={ styles.date }><Ionicons name='md-calendar' size={16} /> 2019-05-31 </Text>
                   </View>
-                  <View style={{ position: 'absolute', right: '3%', top: '5%', width: 33 }}>
+                  <View style={ styles.voteView }>
                       <Text style={ styles.vote }>5.7 </Text>
+                  </View>
+                <ScrollView style={{ height: HEIGHT * 0.09, marginTop: HEIGHT * 0.06 }}>
+                    <Text style={{ padding: 6 }}>Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text
+                        Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text
+                        Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text
+                    </Text>
+                </ScrollView>
+                <View style={ styles.separator } />
+                <View style={{ height: HEIGHT * 0.10 }}>
+                    <Text> Video stays here </Text>
                 </View>
-                <View style={{ marginTop: HEIGHT * 0.06 }}>
-                    <Text>Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text
-                    Lorem ipsum text Lorem ipsum text Lorem ipsum text Lorem ipsum text</Text>
-                    <View style={{ borderBottomWidth: 1, borderBottomColor: 'black', marginTop: 6 }} />
+                <View style={ styles.separator } />
+                <View style={{ height: WIDTH * 0.11 }}>
+                    <XPTouchEffect onPress={this.props.modalToggle}>
+                        <Text>Hello!</Text>
+                    </XPTouchEffect>
+                    <XPTouchEffect onPress={this.props.modalToggle}>
+                      <Text>Hide me!</Text>
+                  </XPTouchEffect>
                 </View>
-              </View>
-
-            <XPTouchEffect onPress={this._toggleModal}>
-            <Text>Hello!</Text>
-            <XPTouchEffect onPress={this.props.modalToggle}>
-              <Text>Hide me!</Text>
-          </XPTouchEffect>
-          </View>
+            </ScrollView>
+          </View> }
         </Modal>
       </View>
     );
@@ -94,18 +103,63 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    separator: {
+        borderBottomWidth: 1,
+        borderBottomColor: 'black',
+        marginTop: 12,
+    },
     modal: {
         margin: WIDTH * 0.06,
         marginTop: HEIGHT * 0.10,
-        marginBottom: HEIGHT * 0.20,
+        marginBottom: HEIGHT * 0.30,
         backgroundColor: 'lightgray',
-        borderRadius: 12
+        borderRadius: 12,
+    },
+    titleView: {
+        position: 'absolute',
+        top: '5%',
+        left: '4%',
+        width: WIDTH * 0.65,
+    },
+    linkView: {
+        position: 'absolute',
+        right: '3%',
+        top: '5%',
+        width: 33,
+    },
+    dateView: {
+        position: 'absolute',
+        top: '5%',
+        left: '4%',
+        width: WIDTH * 0.40,
+    },
+    mainView: {
+        backgroundColor: 'lightblue',
+        borderBottomLeftRadius: 13,
+        borderBottomRightRadius: 13,
+    },
+    voteView: {
+        position: 'absolute',
+        right: '3%',
+        top: '5%',
+        width: 33,
     },
     title: {
         color: 'white',
-        backgroundColor: 'lightgray',
+        backgroundColor: 'rgba(114, 109, 125, 0.5)',
         borderRadius: 20,
         fontSize: 24,
+        paddingLeft: 6,
+        paddingRight: 6,
+        paddingTop: 1,
+        paddingBottom: 2,
+        elevation: 1,
+    },
+    date: {
+        color: 'white',
+        backgroundColor: 'rgba(114, 109, 125, 0.3)',
+        borderRadius: 20,
+        fontSize: 16,
         paddingLeft: 6,
         paddingRight: 6,
         paddingTop: 1,
@@ -122,5 +176,11 @@ const styles = StyleSheet.create({
         paddingTop: 1,
         paddingBottom: 2,
         elevation: 1,
+    },
+    topText: {
+        height: HEIGHT * 0.27,
+        backgroundColor: 'aqua',
+        borderTopLeftRadius: 13,
+        borderTopRightRadius: 13,
     },
 })
