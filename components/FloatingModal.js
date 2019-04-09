@@ -10,15 +10,10 @@ export default class FloatingModal extends React.Component {
         super(props)
 
         this.state = {
-            isModalVisible: false,
             data: [],
             error: null,
             loading: false,
         };
-    }
-
-    _toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible });
     }
 
     fetchDetails = async (id) => {
@@ -40,19 +35,19 @@ export default class FloatingModal extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <XPTouchEffect onPress={this._toggleModal}>
+        <XPTouchEffect onPress={this.props.modalToggle}>
           <Text style={{ marginTop: 240 }}>Show Modal</Text>
       </XPTouchEffect>
-        <Modal isVisible={this.state.isModalVisible}
+        <Modal isVisible={this.props.isVisible}
             style={{ margin: 40, backgroundColor: 'lightgray', borderRadius: 12 }}
-            onBackdropPress={() => this._toggleModal()}
-            onSwipeComplete={() => this._toggleModal()}
+            onBackdropPress={() => this.props.modalToggle()}
+            onSwipeComplete={() => this.pros.modalToggle()}
             swipeDirection="down"
             backdropColor={THEME_GREEN}
             >
           <View style={{ flex: 1 }}>
             <Text>Hello!</Text>
-            <XPTouchEffect onPress={this._toggleModal}>
+            <XPTouchEffect onPress={this.props.modalToggle}>
               <Text>Hide me!</Text>
           </XPTouchEffect>
           </View>
