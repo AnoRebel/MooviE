@@ -47,7 +47,6 @@ export default class MovieScreen extends React.Component {
 
     toggleModal = (id) => {
         this.setState({ id, isModalVisible: !this.state.isModalVisible });
-        console.log(this.state.id);
     }
 
     fetchMovies = async () => {
@@ -159,6 +158,7 @@ export default class MovieScreen extends React.Component {
         <FloatingModal
             modalToggle={this.toggleModal}
           isVisible={this.state.isModalVisible}
+          displayId={this.state.id}
         />
             <SwipeListView
                 useFlatList
