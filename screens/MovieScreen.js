@@ -33,12 +33,19 @@ export default class MovieScreen extends React.Component {
             mounted: true,
             data: [],
             refreshing: false,
+            isModalVisible: false,
+
         }
     }
 
     componentWillMount() {
         console.log('Mounted:');
         setTimeout(() => { this.setState({ mounted: false }) }, 2000);
+    }
+  
+    
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible });
     }
 
     fetchMovies = async () => {
@@ -147,7 +154,10 @@ export default class MovieScreen extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#343834' }}>
         <StatusBar barStyle="dark-content" backgroundColor="#006064" />
-        <FloatingModal />
+        <FloatingModal 
+          isVisible={this.state.isModalVisible}
+          modalToggle={this.toggleModal}
+        />
             <SwipeListView
                 useFlatList
                 data={items}
